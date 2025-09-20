@@ -1,6 +1,6 @@
 
 export default function Home() {
   return (
-    <div></div>
+    <div className="font-rakkas">Hi</div>
   );
 }

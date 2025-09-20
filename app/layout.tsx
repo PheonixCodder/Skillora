@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const spaceGrotesk = localFont({
-  src: "./fonts/SpaceGroteskVF.ttf",
-  variable: "--font-space-grotesk",
-  weight: "300 400 500 700",
+const rakkas = localFont({
+  src: "./fonts/RakkasVF.ttf",
+  variable: "--font-rakkas",
+  weight: "400",
 });
 
 const inter = localFont({
@@ -16,7 +16,11 @@ const inter = localFont({
 
 export const metadata: Metadata = {
   title: "Skillora",
-  description: "",
+  description:
+    "A community-driven platform for asking and answering programming questions. Get help, share knowledge, and collaborate with developers from around the world. Explore topics in web development, mobile app development, algorithms, data structures, and more.",
+  icons: {
+    icon: "/images/logo.webp",
+  },
 };
 
 export default function RootLayout({
@@ -26,9 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} ${spaceGrotesk.variable} antialiased`}
-      >
+      <body className={`${inter.className} ${rakkas.variable} antialiased`}>
         {children}
       </body>
     </html>
