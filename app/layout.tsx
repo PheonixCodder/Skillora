@@ -2,7 +2,6 @@ import ThemeProvider from "@/context/Theme";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "@/components/navigation/navbar";
 
 const rakkas = localFont({
   src: "./fonts/RakkasVF.ttf",
@@ -39,7 +38,6 @@ export default function RootLayout({
           disableTransitionOnChange
           defaultTheme="system"
         >
-          <Navbar />
           {children}
         </ThemeProvider>
       </body>
