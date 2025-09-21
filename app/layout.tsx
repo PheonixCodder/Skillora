@@ -1,7 +1,7 @@
+import ThemeProvider from "@/context/Theme";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import ThemeProvider from "@/context/Theme";
 
 const rakkas = localFont({
   src: "./fonts/RakkasVF.ttf",
@@ -32,7 +32,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} ${rakkas.variable} antialiased`}>
-        <ThemeProvider attribute={"class"} enableSystem disableTransitionOnChange defaultTheme="system">{children}</ThemeProvider>
+        <ThemeProvider
+          attribute={"class"}
+          enableSystem
+          disableTransitionOnChange
+          defaultTheme="system"
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
