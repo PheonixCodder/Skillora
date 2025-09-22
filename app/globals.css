@@ -19,8 +19,11 @@
   --default-font-family: var(--font-inter);
   --font-rakkas: var(--font-rakkas);
 
-  --color-primary-100: #fff1e6;
-  --color-primary-500: #ff7000;
+  /* Primary color scale */
+  --color-primary-100: #e6fff4;  /* light tint */
+  --color-primary-500: #57ff9e;  /* base green */
+  --color-primary-600: #00cc6d;  /* darker green accent */
+  --color-primary-700: #009955;  /* even deeper for hover/focus */
 
   --color-dark-100: #000000;
   --color-dark-200: #0f1117;
@@ -290,7 +293,7 @@
 @utility primary-gradient {
   position: relative;
   z-index: 1;
-  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+  background: linear-gradient(129deg, var(--color-primary-500) 0%, var(--color-primary-600) 100%);
   overflow: hidden;
   isolation: isolate;
 
@@ -299,7 +302,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: linear-gradient(129deg, #e2995f 0%, #ff7000 100%);
+    background: linear-gradient(129deg, var(--color-primary-600) 0%, var(--color-primary-500) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -331,7 +334,7 @@
 }
 
 @utility primary-text-gradient {
-  background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%);
+  background: linear-gradient(129deg, var(--color-primary-500) 0%, var(--color-primary-600) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

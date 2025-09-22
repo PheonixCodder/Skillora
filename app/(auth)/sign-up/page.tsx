@@ -1,11 +1,59 @@
-import React from 'react'
+"use client";
 
-const page = () => {
+import Link from "next/link";
+
+// import { signUpWithCredentials } from "@/lib/actions/auth.action";
+import { SignUpSchema } from "@/lib/validations";
+
+import AuthForm from "@/components/layout/forms/AuthForm";
+
+function SignUp() {
   return (
-    <div>
-      
-    </div>
-  )
+    <>
+      <AuthForm
+        schema={SignUpSchema}
+        fields={[
+          {
+            name: "username",
+            label: "Username",
+            type: "text",
+            defaultValue: "",
+          },
+          {
+            name: "name",
+            label: "Name",
+            type: "text",
+            defaultValue: "",
+          },
+          {
+            name: "email",
+            label: "Email Address",
+            type: "text",
+            defaultValue: "",
+          },
+          {
+            name: "password",
+            label: "Password",
+            type: "password",
+            defaultValue: "",
+          },
+        ]}
+        formType={"SIGN_UP"}
+        buttonText={{ default: "Sign Up", loading: "Signing Up..." }}
+        onSubmit={async (data) => {
+          console.log(data);
+          return { success: true };
+        }}
+      />
+
+      <p className="mt-4">
+        Already have an account?{" "}
+        <Link href="/sign-in" className="paragraph-semibold primary-text-gradient">
+          Sign In
+        </Link>
+      </p>
+    </>
+  );
 }
 
-export default page
+export default SignUp;
