@@ -41,7 +41,7 @@ export default async function RootLayout({
             attribute={"class"}
             enableSystem
             disableTransitionOnChange
-            defaultTheme="system"
+            defaultTheme="dark"
           >
             {/* <AuthSuccessToast /> */}
             {children}
