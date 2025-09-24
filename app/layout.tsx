@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 // import AuthSuccessToast from "@/components/layout/AuthSuccessToast";
 import { Toaster } from "@/components/ui/sonner";
+import AuthSuccessToast from "@/components/AuthSuccessToast";
 
 const rakkas = localFont({
   src: "./fonts/RakkasVF.ttf",
@@ -43,7 +44,7 @@ export default async function RootLayout({
             disableTransitionOnChange
             defaultTheme="dark"
           >
-            {/* <AuthSuccessToast /> */}
+            <AuthSuccessToast />
             {children}
             <Toaster />
           </ThemeProvider>
