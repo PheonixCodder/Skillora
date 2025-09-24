@@ -43,7 +43,7 @@ async function MobileNavigation() {
         <div className="mx-3 flex h-[calc(100vh-80px)] flex-col justify-between gap-6 overflow-y-auto">
           <SheetClose asChild>
             <section className="flex h-full flex-col">
-              <NavLinks isMobileNav userId={userId} />
+              <NavLinks isMobileNav userId={userId}  />
             </section>
           </SheetClose>
 

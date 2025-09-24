@@ -30,7 +30,7 @@ export const sidebarLinks = [
     ImgURL: "/icons/user.svg",
   },
   {
-    PATH: "/ask-a-question",
+    PATH: "/ask-question",
     LABEL: "Ask a question",
     ImgURL: "/icons/question.svg",
   },

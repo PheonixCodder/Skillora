@@ -19,7 +19,7 @@ function AuthButtons({ isMobileNav }: { isMobileNav?: boolean }) {
           )}
         >
           <LogIn className="size-5" />
-          <span className={cn("primary-text-gradient sm:hidden lg:block", isMobileNav && "block")}>
+          <span className={cn("sm:hidden lg:block", isMobileNav && "block")}>
             Sign In
           </span>
         </Button>
@@ -33,7 +33,7 @@ function AuthButtons({ isMobileNav }: { isMobileNav?: boolean }) {
           )}
         >
           <UserPlus className="size-5" />
-          <span className={cn("primary-text-gradient sm:hidden lg:block", isMobileNav && "block")}>
+          <span className={cn(" sm:hidden lg:block", isMobileNav && "block")}>
             Sign Up
           </span>
         </Button>
