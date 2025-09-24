@@ -14,7 +14,7 @@ function AuthButtons({ isMobileNav }: { isMobileNav?: boolean }) {
       <Link href={ROUTES.SIGN_IN} className="button-primary">
         <Button
           className={cn(
-            "small-medium btn-secondary text-dark400_light900 flex min-h-11 w-full items-center gap-2 rounded-lg px-4 py-3 shadow-none",
+            "small-medium hover:btn-tertiary btn-secondary text-dark400_light900 flex min-h-11 w-full items-center gap-2 rounded-lg px-4 py-3 shadow-none",
             isMobileNav && "!px-6 !py-4"
           )}
         >
@@ -28,7 +28,7 @@ function AuthButtons({ isMobileNav }: { isMobileNav?: boolean }) {
       <Link href={ROUTES.SIGN_UP} className="button-primary">
         <Button
           className={cn(
-            "small-medium light-border-2 btn-tertiary text-dark400_light900 flex min-h-11 w-full items-center gap-2 rounded-lg border px-4 py-3 shadow-none",
+            "small-medium light-border-2 hover:btn-secondary btn-tertiary text-dark400_light900 flex min-h-11 w-full items-center gap-2 rounded-lg border px-4 py-3 shadow-none",
             isMobileNav && "!px-6 !py-4"
           )}
         >

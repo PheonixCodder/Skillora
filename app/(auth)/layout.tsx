@@ -26,7 +26,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
           <Link href="/">
             <Image
               src="images/site-logo2.svg"
-              alt="DevFlow Logo"
+              alt="Skillora Logo"
               width={50}
               height={50}
               className="object-contain"

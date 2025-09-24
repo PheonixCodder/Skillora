@@ -2,6 +2,7 @@ import Theme from "@/components/layout/navigation/navbar/Theme";
 import Image from "next/image";
 import Link from "next/link";
 import MobileNavigation from "./MobileNavigation";
+import LeftSidebar from "../LeftSidebar";
 
 const Navbar = () => {
   return (
