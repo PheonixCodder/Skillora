@@ -24,11 +24,15 @@ function NavLinks({ isMobileNav = false, userId }: { isMobileNav?: boolean; user
         const href = link.PATH === "/profile" && userId ? `${link.PATH}/${userId}` : link.PATH;
 
         const LinkComponent = (
-          <Link className={cn("group relative", (link.LABEL === "Profile" && !userId) && "hidden")} key={link.PATH} href={href}>
+          <Link
+            className={cn("group relative", link.LABEL === "Profile" && !userId && "hidden")}
+            key={link.PATH}
+            href={href}
+          >
             <div
               className={cn(
                 isActive ? "text-light-900" : "text-dark300_light900",
-                "text-dark300_light900 relative z-10 flex items-center justify-start hover:bg-primary/5 gap-4 rounded-lg bg-transparent p-4"
+                "text-dark300_light900 hover:bg-primary/5 relative z-10 flex items-center justify-start gap-4 rounded-lg bg-transparent p-4"
               )}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -39,7 +43,15 @@ function NavLinks({ isMobileNav = false, userId }: { isMobileNav?: boolean; user
                 height={20}
                 className={cn("invert-colors", "size-5")}
               />
-              <p className={cn(!isMobileNav && "max-lg:hidden", "base-medium text-[15px]")}>{link.LABEL}</p>
+              <p
+                className={cn(
+                  "base-medium text-[15px] transition-all duration-500 ease-in-out",
+                  !isMobileNav &&
+                    "max-lg:w-0 max-lg:scale-95 max-lg:overflow-hidden max-lg:opacity-0"
+                )}
+              >
+                {link.LABEL}
+              </p>{" "}
             </div>
 
             {isActive && (

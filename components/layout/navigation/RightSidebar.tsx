@@ -135,7 +135,7 @@ async function RightSidebar() {
                   key={tag._id}
                   _id={tag._id}
                   name={tag.name}
-                  // questions={tag.questions}
+                  questions={tag.count}
                   showCount
                   compact
                 />
