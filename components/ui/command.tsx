@@ -58,27 +58,26 @@ function CommandDialog({
   );
 }
 
-function CommandInput({
-  className,
-  onClear,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input> & {
-  onClear?: () => void;
-}) {
+const CommandInput = React.forwardRef<
+  HTMLInputElement,
+  React.ComponentProps<typeof CommandPrimitive.Input> & { onClear?: () => void }
+>(({ className, onClear, ...props }, ref) => {
   return (
     <div data-slot="command-input-wrapper" className="flex h-9 items-center gap-2 border-b px-3">
       <SearchIcon className="size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
+        ref={ref}
         data-slot="command-input"
         className={cn(
           "placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
-        {...props}
+        {...props} // ✅ this now includes `value` and `onValueChange`
       />
-      {onClear && (
+      {onClear && props.value && (
         <Hint label="Clear" side="right" align="center">
           <X
+
             onClick={onClear}
             className="size-4 shrink-0 cursor-pointer opacity-50 hover:opacity-80"
           />
@@ -86,7 +85,7 @@ function CommandInput({
       )}
     </div>
   );
-}
+});
 
 function CommandList({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (

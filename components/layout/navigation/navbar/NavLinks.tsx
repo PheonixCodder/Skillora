@@ -16,6 +16,7 @@ function NavLinks({ isMobileNav = false, userId }: { isMobileNav?: boolean; user
 
   return (
     <>
+    <div className="flex flex-col gap-5">
       {sidebarLinks.map((link) => {
         const isActive =
           pathName === link.PATH || (pathName.includes(link.PATH) && link.PATH.length > 1);
@@ -32,7 +33,7 @@ function NavLinks({ isMobileNav = false, userId }: { isMobileNav?: boolean; user
             <div
               className={cn(
                 isActive ? "text-light-900" : "text-dark300_light900",
-                "text-dark300_light900 hover:bg-primary/5 relative z-10 flex items-center justify-start gap-4 rounded-lg bg-transparent p-4"
+                "relative z-10 flex h-12 items-center gap-4 rounded-lg bg-transparent px-4 hover:bg-light-900/10 hover:text-light-900 dark:hover:bg-light-900/10 dark:hover:text-light-900"
               )}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -73,6 +74,7 @@ function NavLinks({ isMobileNav = false, userId }: { isMobileNav?: boolean; user
           LinkComponent
         );
       })}
+      </div>
     </>
   );
 }

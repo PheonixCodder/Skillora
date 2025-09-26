@@ -146,6 +146,7 @@ const HomeFilter = () => {
             </MotionButton>
           );
         })}
+      </div>
         <motion.p
           ref={ref}
           className="text-light-500 min-h-5 text-sm"
@@ -158,7 +159,6 @@ const HomeFilter = () => {
             bounce: 0.2,
           }}
         />
-      </div>
       <TagsFilter />
     </motion.div>
   );

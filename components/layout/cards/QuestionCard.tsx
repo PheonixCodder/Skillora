@@ -8,7 +8,7 @@ import Metric from "../Metric.tsx";
 import TagCard from "./TagCard";
 
 import { ROUTES } from "@/constants/routes";
-import { Question, Tag } from "@/types/global";
+import { Question, Tag } from "@/types/global.js";
 
 interface Props {
   question: Question;

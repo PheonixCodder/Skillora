@@ -16,7 +16,7 @@ type author = {
 };
 
 // Question type
-type Question = {
+interface Question {
   readonly _id: string;
   title: string;
   tags: Tag[];

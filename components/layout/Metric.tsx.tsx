@@ -25,7 +25,7 @@ const Metric = ({ imgUrl, alt, value, title, href, textStyles, imgStyles, titleS
           <Image
             src={imgUrl}
             alt={alt}
-            className="w-full object-cover"
+            className=" object-cover w-[32px]"
             width={16}
             height={16}
             quality={100}

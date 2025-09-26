@@ -14,7 +14,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
       <div className="flex">
         <LeftSidebar />
 
-        <section className="w-full p-6 pt-36 max-md:pb-14 sm:px-14">
+        <section className="w-full p-6 pt-36 max-md:pb-14 ">
           <div className="mx-auto w-full max-w-6xl">{children}</div>
         </section>
 

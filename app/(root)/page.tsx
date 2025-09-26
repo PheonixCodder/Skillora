@@ -32,7 +32,6 @@ import { SearchParams } from "@/types/global";
 export default async function Home({ searchParams }: { searchParams: SearchParams }) {
   const { page, pageSize, query, filter, tags } = await searchParams;
   const tagIds = tags ? tags.split(",") : [];
-  console.log(tagIds)
   const data = {
     questions: [
       {
@@ -47,16 +46,19 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
           {
             _id: "1",
             name: "javascript",
+            questions: 10,
           },
           {
             _id: "2",
             name: "node",
+            questions: 10,
           },
         ],
         author: {
           _id: "1",
           name: "John Doe",
           username: "johndoe",
+          image: "./icons/avatar.svg",
         },
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -73,16 +75,19 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
           {
             _id: "1",
             name: "javascript",
+            questions: 10,
           },
           {
             _id: "2",
             name: "node",
+            questions: 10,
           },
         ],
         author: {
           _id: "1",
           name: "John Doe",
           username: "johndoe",
+          image: "./icons/avatar.svg",
         },
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -99,16 +104,19 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
           {
             _id: "1",
             name: "javascript",
+            questions: 10,
           },
           {
             _id: "2",
             name: "node",
+            questions: 10,
           },
         ],
         author: {
           _id: "1",
           name: "John Doe",
           username: "johndoe",
+          image: "./icons/avatar.svg",
         },
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -129,7 +137,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 
   return (
     <>
-      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
+      <section className="flex w-full flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
         <Button className="primary-gradient !text-light-900 min-h-11 px-4 py-3" asChild>

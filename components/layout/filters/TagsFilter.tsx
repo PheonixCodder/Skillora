@@ -28,6 +28,7 @@ const frameworks = [
 export function TagsFilter() {
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState<string[]>([]);
+  const [search, setSearch] = React.useState(""); // <-- add controlled state
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -88,9 +89,15 @@ export function TagsFilter() {
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[220px] p-0">
+      <PopoverContent className="w-[220px] p-0 ">
         <Command>
-          <CommandInput onClear={clearAll} placeholder="Search tags..." className="h-9" />
+          <CommandInput
+            value={search}
+            onValueChange={setSearch}
+            onClear={() => setSearch("")} // ✅ clears only search
+            placeholder="Search tags..."
+            className="h-9"
+          />
           <CommandList>
             <CommandEmpty>No tags found.</CommandEmpty>
             <CommandGroup>
@@ -111,6 +118,15 @@ export function TagsFilter() {
               ))}
             </CommandGroup>
           </CommandList>
+
+          {/* ✅ Clear All button in footer */}
+          {selected.length > 0 && (
+            <div className="border-t px-2 py-1.5 text-center">
+              <Button variant="ghost" size="sm" className="w-full" onClick={clearAll}>
+                Clear all filters
+              </Button>
+            </div>
+          )}
         </Command>
       </PopoverContent>
     </Popover>
