@@ -8,7 +8,7 @@ export const ROUTES = {
   TAG: (id: string) => `/tags/${id}`,
   TAGS: "/tags",
   COLLECTIONS: "/collections",
-  ASK_A_QUESTION: "/ask-a-question",
+  ASK_A_QUESTION: "/ask-question",
   JOBS: "/jobs",
   COMMUNITIES: "/community",
 };
