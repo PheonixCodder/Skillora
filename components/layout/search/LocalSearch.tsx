@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
 
+import useKey from "@/hooks/useKey";
 import { formUrlQuery, removeUrlQueryParams } from "@/lib/url";
 import { cn } from "@/lib/utils";
-import useKey from "@/hooks/useKey";
 
 import { Input } from "@/components/ui/input";
 
@@ -44,7 +44,7 @@ const LocalSearch = ({
       setSearchQuery("");
       inputRef.current?.blur();
     }, []),
-    { key: "Escape" },
+    { key: "Escape" }
   );
 
   // Focus on the search input when Ctrl+K is pressed
@@ -55,7 +55,7 @@ const LocalSearch = ({
         inputRef.current?.focus();
       }
     }, []),
-    { key: "k" },
+    { key: "k" }
   );
 
   // Sync with URL query when it changes externally
@@ -82,7 +82,6 @@ const LocalSearch = ({
           key: "query",
           value: searchQuery,
         });
-        console.log(newUrl)
         router.push(newUrl, { scroll: false });
       } else {
         if (pathname === route) {
@@ -102,7 +101,7 @@ const LocalSearch = ({
     <div
       className={cn(
         "background-light800_darkgradient flex min-h-14 grow items-center gap-2 rounded-2xl border px-4 py-2 shadow-sm",
-        className,
+        className
       )}
     >
       <div className="flex aspect-square size-6 items-center justify-center">

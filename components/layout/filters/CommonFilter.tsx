@@ -1,4 +1,3 @@
-import React from 'react'
 
 const CommonFilter = ({ containerClasses, otherClasses, filters }: any) => {
   return (

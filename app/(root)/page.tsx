@@ -30,7 +30,9 @@ import { SearchParams } from "@/types/global";
 // };
 
 export default async function Home({ searchParams }: { searchParams: SearchParams }) {
-  const { page, pageSize, query, filter } = await searchParams;
+  const { page, pageSize, query, filter, tags } = await searchParams;
+  const tagIds = tags ? tags.split(",") : [];
+  console.log(tagIds)
   const data = {
     questions: [
       {
@@ -120,6 +122,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
   //   pageSize: Number(pageSize) || 10,
   //   query: query || "",
   //   filter: filter || "",
+  //   tags: tagIds,
   // });
 
   const { questions, isNext } = data || {};
