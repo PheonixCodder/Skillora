@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-// import Editor from "@/components/layout/editor/Editor";
+import Editor from "@/components/layout/editor/Editor";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -88,7 +88,7 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
                 <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
-                {/* <Editor value={field.value} onChange={field.onChange} /> */}
+                <Editor value={field.value} fieldChange={field.onChange} />
               </FormControl>
               <FormDescription className="body-regular text-light-500">
                 Write a detailed description of your question.
