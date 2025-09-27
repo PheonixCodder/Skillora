@@ -1,28 +1,26 @@
 import { model, models, Schema, Types } from "mongoose";
 
-export interface IAccount {
-  userId: Types.ObjectId;
-  name: string;
-  image?: string;
-  password?: string;
-  provider: string;
-  providerAccountId: string;
+export interface IAnswer {
+  author: Types.ObjectId;
+  question: Types.ObjectId;
+  content: string;
+  upvotes: number;
+  downvotes: number;
 }
 
-export interface IAccountDoc extends IAccount, Document {}
+export interface IAnswerDocument extends IAnswer, Document {}
 
-const AccountSchema = new Schema<IAccount>(
+const AnswerSchema = new Schema<IAnswer>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    name: { type: String, required: true },
-    image: { type: String },
-    password: { type: String },
-    provider: { type: String, required: true },
-    providerAccountId: { type: String, required: true },
+    author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    question: { type: Schema.Types.ObjectId, ref: "Question", required: true },
+    content: { type: String, required: true },
+    upvotes: { type: Number, default: 0 },
+    downvotes: { type: Number, default: 0 },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-const Account = models?.Account || model<IAccount>("Account", AccountSchema);
+const Answer = models?.Answer || model<IAnswer>("Answer", AnswerSchema);
 
-export default Account;
+export default Answer;
