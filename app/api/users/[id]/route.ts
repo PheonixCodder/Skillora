@@ -13,7 +13,7 @@ import { APIErrorResponse, APIResponse } from "@/types/global";
 // GET /api/users/:id
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<APIResponse<IUserDoc>> {
   try {
     const { id } = await params;
@@ -38,7 +38,7 @@ export async function GET(
 // DELETE /api/users/:id
 export async function DELETE(
   request: Request,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<APIResponse<IUserDoc>> {
   try {
     const { id } = await params;
@@ -63,7 +63,7 @@ export async function DELETE(
 // PUT /api/users/:id
 export async function PUT(
   request: Request,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<APIResponse<IUserDoc>> {
   try {
     const { id } = await params;

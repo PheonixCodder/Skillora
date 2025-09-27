@@ -14,18 +14,13 @@ export async function GET(): Promise<APIResponse<IAccountDoc[]>> {
 
     const accounts = await Account.find();
 
-    return NextResponse.json(
-      { success: true, data: accounts },
-      { status: 200 },
-    );
+    return NextResponse.json({ success: true, data: accounts }, { status: 200 });
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;
   }
 }
 
-export async function POST(
-  request: Request,
-): Promise<APIResponse<IAccountDoc>> {
+export async function POST(request: Request): Promise<APIResponse<IAccountDoc>> {
   try {
     await dbConnect();
 
@@ -44,10 +39,7 @@ export async function POST(
     // Create account
     const newAccount = await Account.create(validatedAccount);
 
-    return NextResponse.json(
-      { success: true, data: newAccount },
-      { status: 201 },
-    );
+    return NextResponse.json({ success: true, data: newAccount }, { status: 201 });
   } catch (error) {
     return handleError(error, "api") as APIErrorResponse;
   }

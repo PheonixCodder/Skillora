@@ -9,9 +9,7 @@ import User, { IUserDoc } from "@/database/user.model";
 import { APIErrorResponse, APIResponse } from "@/types/global";
 
 // POST /api/users/email - Find user by email (email in request body for security)
-export async function POST(
-  request: Request,
-): Promise<APIResponse<IUserDoc | null>> {
+export async function POST(request: Request): Promise<APIResponse<IUserDoc | null>> {
   const { email } = await request.json();
 
   try {
@@ -23,7 +21,7 @@ export async function POST(
 
     const user = await User.findOne(
       { email: validatedEmail.data.email },
-      { password: 0, __v: 0, createdAt: 0, updatedAt: 0 },
+      { password: 0, __v: 0, createdAt: 0, updatedAt: 0 }
     );
     if (!user) throw new NotFoundError("User");
 

@@ -9,9 +9,7 @@ import Account, { IAccountDoc } from "@/database/account.model";
 import { APIErrorResponse, APIResponse } from "@/types/global";
 
 // POST /api/accounts/provider
-export async function POST(
-  request: NextRequest,
-): Promise<APIResponse<IAccountDoc>> {
+export async function POST(request: NextRequest): Promise<APIResponse<IAccountDoc>> {
   try {
     const { providerAccountId } = await request.json();
 
