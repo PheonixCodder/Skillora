@@ -54,7 +54,7 @@ const dbConnect = async (): Promise<Mongoose> => {
   if (!cached.promise) {
     cached.promise = mongoose
       .connect(MONGODB_URI, {
-        dbName: "devflow",
+        dbName: "skillora",
         // Connection timeout settings
         serverSelectionTimeoutMS: 30000, // 30 seconds to select server
         connectTimeoutMS: 30000, // 30 seconds to establish connection
