@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 
 import SignOutButton from "@/components/ui/SignOutButton";
-import AuthButtons from "../forms/AuthButtons";
+import AuthButtons from "@/components/layout/forms/AuthButtons";
 import NavLinks from "./navbar/NavLinks";
 
 async function LeftSidebar() {

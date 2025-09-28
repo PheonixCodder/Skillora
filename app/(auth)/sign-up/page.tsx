@@ -6,6 +6,7 @@ import Link from "next/link";
 import { SignUpSchema } from "@/lib/validations";
 
 import AuthForm from "@/components/layout/forms/AuthForm";
+import { signUpWithCredentials } from "@/lib/actions/auth.action";
 
 function SignUp() {
   return (
@@ -40,10 +41,7 @@ function SignUp() {
         ]}
         formType={"SIGN_UP"}
         buttonText={{ default: "Sign Up", loading: "Signing Up..." }}
-        onSubmit={async (data) => {
-          console.log(data);
-          return { success: true };
-        }}
+        onSubmit={signUpWithCredentials}
       />
 
       <p className="mt-4">

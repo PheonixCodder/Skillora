@@ -33,7 +33,7 @@ function NavLinks({ isMobileNav = false, userId }: { isMobileNav?: boolean; user
             <div
               className={cn(
                 isActive ? "text-light-900" : "text-dark300_light900",
-                "relative z-10 flex h-12 items-center gap-4 rounded-lg bg-transparent px-4 hover:bg-light-900/10 hover:text-light-900 dark:hover:bg-light-900/10 dark:hover:text-light-900"
+                "relative z-10 flex h-12 items-center gap-4 rounded-lg bg-transparent px-4 hover:bg-light-400/10 hover:text-light-900 dark:hover:bg-light-900/10 dark:hover:text-light-900"
               )}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}

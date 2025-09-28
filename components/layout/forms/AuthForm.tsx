@@ -1,7 +1,13 @@
 "use client";
 
 import React from "react";
-import { DefaultValues, FieldValues, Path, SubmitHandler, useForm } from "react-hook-form";
+import {
+  DefaultValues,
+  FieldValues,
+  Path,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 
 import { useRouter } from "next/navigation";
 
@@ -53,7 +59,7 @@ export default function AuthForm<T extends FieldValues>({
     resolver: zodResolver(schema as any),
     defaultValues: fields.reduce(
       (acc, field) => ({ ...acc, [field.name]: field.defaultValue }),
-      {} as DefaultValues<T>
+      {} as DefaultValues<T>,
     ),
   });
 
@@ -64,7 +70,9 @@ export default function AuthForm<T extends FieldValues>({
 
     if (response?.success) {
       toast.success(
-        formType === "SIGN_UP" ? "Account created successfully" : "Signed in successfully"
+        formType === "SIGN_UP"
+          ? "Account created successfully"
+          : "Signed in successfully",
       );
 
       router.push(ROUTES.HOME);
@@ -77,7 +85,10 @@ export default function AuthForm<T extends FieldValues>({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="mt-10 space-y-5">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="mt-10 space-y-5"
+      >
         {fields.map((formField) => (
           <FormField
             key={formField.name as string}
@@ -105,7 +116,9 @@ export default function AuthForm<T extends FieldValues>({
           disabled={form.formState.isSubmitting}
           type="submit"
         >
-          {form.formState.isSubmitting ? buttonText.loading : buttonText.default}
+          {form.formState.isSubmitting
+            ? buttonText.loading
+            : buttonText.default}
         </Button>
       </form>
     </Form>

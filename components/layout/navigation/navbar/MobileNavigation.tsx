@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import SignOutButton from "@/components/ui/SignOutButton";
 
-import AuthButtons from "../../forms/AuthButtons";
+import AuthButtons from "@/components/layout/forms/AuthButtons";
 
 import NavLinks from "./NavLinks";
 

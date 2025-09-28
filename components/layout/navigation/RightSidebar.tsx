@@ -3,7 +3,7 @@ import Link from "next/link";
 // import { getHotQuestions } from "@/lib/actions/question.action";
 // import { getPopularTags } from "@/lib/actions/tag.action";
 
-import TagCard from "../cards/TagCard";
+import TagCard from "@/components/layout/cards/TagCard";
 
 import { ROUTES } from "@/constants/routes";
 

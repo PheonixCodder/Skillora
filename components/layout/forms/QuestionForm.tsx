@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import TagCard from "../cards/TagCard";
+import TagCard from "@/components/layout/cards/TagCard";
 
 import { AskQuestionSchema } from "@/lib/validations";
 import { Question } from "@/types/global";

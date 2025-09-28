@@ -87,7 +87,7 @@
 }
 
 @utility background-light850_dark100 {
-  @apply bg-light-850 dark:bg-dark-100;
+  @apply bg-light-800 dark:bg-[#08090f];
 }
 
 @utility background-light900_dark200 {

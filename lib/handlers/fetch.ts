@@ -1,5 +1,5 @@
-import { RequestError } from "../http-errors";
-import logger from "../logger";
+import { RequestError } from "@/lib/http-errors";
+import logger from "@/lib/logger";
 
 import handleError from "./error";
 

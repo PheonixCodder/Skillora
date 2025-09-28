@@ -6,6 +6,7 @@ import Link from "next/link";
 import { SignInSchema } from "@/lib/validations";
 
 import AuthForm from "@/components/layout/forms/AuthForm";
+import { signInWithCredentials } from "@/lib/actions/auth.action";
 
 function SignIn() {
   return (
@@ -27,10 +28,7 @@ function SignIn() {
           },
         ]}
         buttonText={{ default: "Sign In", loading: "Signing In..." }}
-        onSubmit={async (data) => {
-          console.log(data);
-          return { success: true };
-        }}
+        onSubmit={signInWithCredentials}
         formType="SIGN_IN"
       />
 
