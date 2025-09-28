@@ -27,7 +27,7 @@ interface Question {
   upvotes: number;
   downvotes: number;
   views: number;
-};
+}
 
 // Answer type
 type AnswerType = {

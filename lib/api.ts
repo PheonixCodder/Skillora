@@ -1,11 +1,10 @@
-import { LanguageModelUsage } from "ai";
-
+import { APIResponse } from "@/types/global";
 import { fetchHandler } from "./handlers/fetch";
 import { SignInWithOAuthResponseType } from "./validations";
+import {LanguageModelUsage} from "ai";
 
 import { IAccount } from "@/database/account.model";
 import { IUser } from "@/database/user.model";
-import { APIResponse } from "@/types/global";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
@@ -52,20 +51,20 @@ export const api = {
         body: JSON.stringify({ providerAccountId }),
       }),
   },
-//   ai: {
-//     answers: async (question: string, content: string, userAnswer: string) =>
-//       fetchHandler<
-//         APIResponse<{
-//           text: string;
-//           usage: LanguageModelUsage;
-//           reasoning: string | undefined;
-//           providerMetadata: unknown;
-//           sources: unknown;
-//         }>
-//       >(`${API_BASE_URL}/ai/answers`, {
-//         method: "POST",
-//         body: JSON.stringify({ question, content, userAnswer }),
-//         timeout: 100000,
-//       }),
-//   },
+    ai: {
+      answers: async (question: string, content: string, userAnswer: string) =>
+        fetchHandler<
+          APIResponse<{
+            text: string;
+            usage: LanguageModelUsage;
+            reasoning: string | undefined;
+            providerMetadata: unknown;
+            sources: unknown;
+          }>
+        >(`${API_BASE_URL}/ai/answers`, {
+          method: "POST",
+          body: JSON.stringify({ question, content, userAnswer }),
+          timeout: 100000,
+        }),
+    },
 };

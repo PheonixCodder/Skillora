@@ -17,22 +17,22 @@ import handleError from "@/lib/handlers/error";
 import { ValidationError } from "@/lib/http-errors";
 import { SearchParams } from "@/types/global";
 
-const test = async () => {
-  try {
-    const validated = await Promise.resolve({
-      success: false,
-      error: {
-        path: ["title", "content", "tags", "author"],
-        tags : ["Tag must be at least 3 characters"],
-      },
-    });
-    if (!validated.success) throw new ValidationError(validated.error);
+// const test = async () => {
+//   try {
+//     const validated = await Promise.resolve({
+//       success: false,
+//       error: {
+//         path: ["title", "content", "tags", "author"],
+//         tags : ["Tag must be at least 3 characters"],
+//       },
+//     });
+//     if (!validated.success) throw new ValidationError(validated.error);
 
-    return validated;
-  } catch (error) {
-    return handleError(error);
-  }
-};
+//     return validated;
+//   } catch (error) {
+//     return handleError(error);
+//   }
+// };
 
 export default async function Home({ searchParams }: { searchParams: SearchParams }) {
   const { page, pageSize, query, filter, tags } = await searchParams;
@@ -138,7 +138,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
   //   tags: tagIds,
   // });
 
-  test();
+  // test();
   const { questions, isNext } = data || {};
 
   return (
