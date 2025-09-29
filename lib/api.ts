@@ -1,4 +1,3 @@
-import { APIResponse } from "@/types/global";
 import { fetchHandler } from "./handlers/fetch";
 import { SignInWithOAuthResponseType } from "./validations";
 import {LanguageModelUsage} from "ai";
