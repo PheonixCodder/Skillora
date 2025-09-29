@@ -1,46 +1,3 @@
-import { NextResponse } from "next/server";
-
-// Tag type
-type Tag = {
-  readonly _id: string;
-  name: string;
-  questions: number;
-};
-
-// Author type
-type author = {
-  readonly _id: string;
-  name: string;
-  username?: string;
-  image: string;
-};
-
-// Question type
-interface Question {
-  readonly _id: string;
-  title: string;
-  tags: Tag[];
-  content: string;
-  author: author;
-  createdAt: Date;
-  answers: number;
-  upvotes: number;
-  downvotes: number;
-  views: number;
-}
-
-// Answer type
-type AnswerType = {
-  readonly _id: string;
-  content: string;
-  author: author;
-  createdAt: Date;
-  upvotes: number;
-  downvotes: number;
-  showActions?: boolean;
-};
-
-// Action response type
 type ActionResponse<T = null> = {
   success: boolean;
   data?: T;
@@ -51,35 +8,90 @@ type ActionResponse<T = null> = {
   status?: number;
 };
 
-// Success response type
 type SuccessResponse<T = null> = ActionResponse<T> & { success: true };
-
-// Error response type
 type ErrorResponse = ActionResponse<undefined> & { success: false };
 
-// API response type
 type APIErrorResponse = NextResponse<ErrorResponse>;
+type APIResponse<T = null> = NextResponse<SuccessResponse<T> | ErrorResponse>;
 
-type APIResponse<T = null> = NextResponse<SuccessResponse<T>> | APIErrorResponse;
+interface UrlQueryParams {
+  params: string;
+  key: string;
+  value: string | null;
+}
 
-//
-type Params = Promise<Record<string, string>>;
-type SearchParams = Promise<Record<string, string>>;
-
-export type Collection = {
-  readonly _id: string;
-  author: string | author;
-  questions: Question[];
-};
-
+interface RemoveUrlQueryParams {
+  params: string;
+  keysToRemove: string[];
+}
 // Collection type after aggregation pipeline with $unwind
-export type AggregatedCollection = {
+type AggregatedCollection = {
   readonly _id: string;
-  author: string | author;
+  author: string | Author;
   questions: Question; // Single question after $unwind
 };
 
-export interface User {
+interface Tag {
+  _id: string;
+  name: string;
+  questions?: number;
+}
+
+interface Author {
+  _id: string;
+  name: string;
+  image: string;
+  username?: string;
+}
+
+interface Question {
+  _id: string;
+  title: string;
+  content: string;
+  tags: Tag[];
+  author: Author;
+  createdAt: Date;
+  upvotes: number;
+  downvotes: number;
+  answers: number;
+  views: number;
+}
+
+interface Answer {
+  _id: string;
+  author: Author;
+  content: string;
+  upvotes: number;
+  question: string;
+  downvotes: number;
+  createdAt: Date;
+  showActions?: boolean;
+}
+
+interface RouteParams {
+  params: Promise<Record<string, string>>;
+  searchParams: Promise<Record<string, string>>;
+}
+
+type Params = Promise<Record<string, string>>;
+type SearchParams = Promise<Record<string, string>>;
+
+interface PaginatedSearchParams {
+  page?: number;
+  pageSize?: number;
+  query?: string;
+  filter?: string;
+  tags?: string[];
+  sort?: string;
+}
+
+interface Collection {
+  _id: string;
+  author: string | Author;
+  question: Question;
+}
+
+interface User {
   _id: string;
   name: string;
   username: string;
@@ -92,8 +104,34 @@ export interface User {
   createdAt: Date;
 }
 
-interface BadgeCounts {
+interface Badges {
   GOLD: number;
   SILVER: number;
   BRONZE: number;
+}
+
+interface Job {
+  id?: string;
+  employer_name?: string;
+  employer_logo?: string | undefined;
+  employer_website?: string;
+  job_employment_type?: string;
+  job_title?: string;
+  job_description?: string;
+  job_apply_link?: string;
+  job_city?: string;
+  job_state?: string;
+  job_country?: string;
+}
+
+interface Country {
+  name: {
+    common: string;
+  };
+}
+
+interface GlobalSearchedItem {
+  id: string;
+  type: "question" | "answer" | "user" | "tag";
+  title: string;
 }
