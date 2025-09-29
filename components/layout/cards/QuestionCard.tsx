@@ -3,12 +3,11 @@ import Link from "next/link";
 import { getTimestamp } from "@/lib/utils";
 
 import Metric from "@/components/layout/Metric.tsx";
-// import EditDeleteAction from "@/components/layout/user/EditDeleteAction";
+import EditDeleteAction from "@/components/layout/user/EditDeleteAction";
 
 import TagCard from "./TagCard";
 
 import { ROUTES } from "@/constants/routes";
-import { Question, Tag } from "@/types/global.js";
 
 interface Props {
   question: Question;
@@ -33,7 +32,7 @@ const QuestionCard = ({
             </h3>
           </Link>
         </div>
-        {/* {showActions && <EditDeleteAction type="question" id={_id} />} */}
+        {showActions && <EditDeleteAction type="question" id={_id} />}
       </div>
 
       <div className="mt-3.5 flex w-full flex-wrap gap-2">
