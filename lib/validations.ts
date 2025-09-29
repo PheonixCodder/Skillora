@@ -67,6 +67,11 @@ export const GetQuestionSchema = z.object({
   questionId: z.string().min(1, { message: "Question ID is required" }),
 });
 
+export const IncrementViewsSchema = z.object({
+  questionId: z.string().min(1, "Question ID is required"),
+});
+
+
 export type GetQuestionSchemaType = z.infer<typeof GetQuestionSchema>;
 
 export type EditQuestionSchemaType = z.infer<typeof EditQuestionSchema>;
@@ -136,6 +141,7 @@ export const PaginatedSearchParamsSchema = z.object({
   pageSize: z.number().int().positive().default(10),
   query: z.string().optional(),
   filter: z.string().optional(),
+  tags: z.array(z.string()).optional(),
   sortBy: z.string().optional(),
 });
 
