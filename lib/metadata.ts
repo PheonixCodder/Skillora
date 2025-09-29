@@ -9,11 +9,11 @@ interface GenerateMetadataProps {
 }
 
 export function generateMetadata({
-	title = "My Next.js App",
+	title = "Skillora",
 	description = "A boilerplate for Next.js applications",
 	image = "/og-image.png",
 	noIndex = false,
-	siteName = "My Next.js App",
+	siteName = "Skillora",
 }: GenerateMetadataProps = {}): Metadata {
 	const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://example.com";
 
