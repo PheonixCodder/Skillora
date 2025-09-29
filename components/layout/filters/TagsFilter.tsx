@@ -17,15 +17,17 @@ import { formUrlQuery, removeUrlQueryParams } from "@/lib/url";
 import { cn } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const frameworks = [
-  { value: "next.js", label: "Next.js" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt.js", label: "Nuxt.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-];
+// const frameworks = [
+//   { value: "68dac1660b3ca61c39606959", label: "Next" },
+//   { value: "sveltekit", label: "SvelteKit" },
+//   { value: "nuxt.js", label: "Nuxt.js" },
+//   { value: "remix", label: "Remix" },
+//   { value: "astro", label: "Astro" },
+// ];
 
-export function TagsFilter() {
+
+
+export function TagsFilter({frameworks}: { frameworks: { value: string; label: string }[]} ) {
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState<string[]>([]);
   const [search, setSearch] = React.useState(""); // <-- add controlled state

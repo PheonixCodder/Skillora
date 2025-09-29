@@ -49,7 +49,7 @@ const buttonVariants = {
   },
 };
 
-const HomeFilter = () => {
+const HomeFilter = ({ tags }: { tags: { value: string; label: string }[] }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const paramFilter = searchParams.get("filter") || "all";
@@ -89,7 +89,7 @@ const HomeFilter = () => {
   };
 
   return (
-    <motion.div className="mt-10 hidden flex-wrap justify-between items-center gap-2 sm:flex">
+    <motion.div className="mt-10 hidden flex-wrap items-center justify-between gap-2 sm:flex">
       <div className="flex items-center gap-2">
         {filters.map((filter) => {
           const isSelected = selectedFilter === filter.value;
@@ -147,19 +147,19 @@ const HomeFilter = () => {
           );
         })}
       </div>
-        <motion.p
-          ref={ref}
-          className="text-light-500 min-h-5 text-sm"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{
-            type: "spring",
-            duration: 0.6,
-            bounce: 0.2,
-          }}
-        />
-      <TagsFilter />
+      <motion.p
+        ref={ref}
+        className="text-light-500 min-h-5 text-sm"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{
+          type: "spring",
+          duration: 0.6,
+          bounce: 0.2,
+        }}
+      />
+      <TagsFilter frameworks={tags} />
     </motion.div>
   );
 };
