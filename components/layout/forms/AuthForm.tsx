@@ -27,7 +27,6 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { ROUTES } from "@/constants/routes";
-import { ActionResponse } from "@/types/global";
 
 interface Field<T> {
   name: keyof T;
