@@ -9,7 +9,7 @@ async function LeftSidebar() {
   const userId = session?.user?.id;
 
   return (
-    <aside className="background-light900_dark200 no-scrollbar light-border sticky top-0 flex h-screen w-full max-w-72 flex-col justify-between overflow-y-auto p-6 px-5 pt-36 transition-[max-width] duration-500 ease-in-out max-lg:max-w-24 max-lg:items-center max-sm:hidden">
+    <aside className="background-light900_dark200 no-scrollbar light-border sticky top-0 flex h-screen w-full max-w-72 border-r flex-col justify-between overflow-y-auto p-6 px-5 pt-36 transition-[max-width] duration-500 ease-in-out max-lg:max-w-24 max-lg:items-center max-sm:hidden">
       <div>
         <NavLinks userId={userId} />
       </div>
