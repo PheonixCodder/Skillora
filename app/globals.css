@@ -14,6 +14,10 @@
     scrollbar-width: none;
   }
 }
+html {
+  overflow-y: overlay!important;
+}
+
 
 @theme {
   --default-font-family: var(--font-inter);
@@ -47,7 +51,7 @@
   --radius-sm: calc(var(--radius) - 4px);
 
   --shadow-light-100:
-    0px 12px 20px 0px rgba(184, 184, 184, 0.03),
+    0px 12px 20px 0px rgba(184, 184, 184, 0.4),
     0px 6px 12px 0px rgba(184, 184, 184, 0.02),
     0px 2px 4px 0px rgba(184, 184, 184, 0.03);
   --shadow-light-200: 10px 10px 20px 0px rgba(218, 213, 213, 0.1);
@@ -87,7 +91,7 @@
 }
 
 @utility background-light850_dark100 {
-  @apply bg-light-800 dark:bg-[#08090f];
+  @apply bg-light-900 dark:bg-[#08090f];
 }
 
 @utility background-light900_dark200 {
