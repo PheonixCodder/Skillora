@@ -8,7 +8,6 @@ import dbConnect from "@/lib/mongoose";
 import { AccountSchema } from "@/lib/validations";
 
 import Account, { IAccountDoc } from "@/database/account.model";
-import { APIErrorResponse, APIResponse } from "@/types/global";
 
 // GET /api/accounts/:id
 export async function GET(

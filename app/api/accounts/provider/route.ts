@@ -6,7 +6,6 @@ import dbConnect from "@/lib/mongoose";
 import { AccountSchema } from "@/lib/validations";
 
 import Account, { IAccountDoc } from "@/database/account.model";
-import { APIErrorResponse, APIResponse } from "@/types/global";
 
 // POST /api/accounts/provider
 export async function POST(request: NextRequest): Promise<APIResponse<IAccountDoc>> {
