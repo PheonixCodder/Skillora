@@ -22,10 +22,12 @@ import { Input } from "@/components/ui/input";
 import TagCard from "@/components/layout/cards/TagCard";
 
 import { AskQuestionSchema } from "@/lib/validations";
-import { Question } from "@/types/global";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { createQuestion, editQuestion } from "@/lib/actions/question.action";
+import { toast } from "sonner";
+import { ROUTES } from "@/constants/routes";
 
 const MotionTagCard = motion.create(TagCard);
 
@@ -52,9 +54,80 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
     },
   });
 
+  function handleInputKeyDown(
+    e: React.KeyboardEvent<HTMLInputElement>,
+    field: {
+      value: string[];
+    },
+  ) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const tagInput = e.currentTarget.value.trim();
+
+      if (tagInput.length < 3) {
+        form.setError("tags", {
+          type: "manual",
+          message: "Tag must be at least 3 characters",
+        });
+      } else if (tagInput.length > 30) {
+        form.setError("tags", {
+          type: "manual",
+          message: "Tag must be less than 30 characters",
+        });
+      } else if (field.value.includes(tagInput)) {
+        form.setError("tags", {
+          type: "manual",
+          message: "Tag already exists",
+        });
+      } else {
+        form.setValue("tags", [...field.value, tagInput]);
+        e.currentTarget.value = "";
+        form.clearErrors("tags");
+      }
+    }
+  }
+
+  function handleRemoveTag(tag: string, field: { value: string[] }) {
+    const newTags = field.value.filter((t) => t !== tag);
+    form.setValue("tags", newTags);
+
+    if (newTags.length === 0) {
+      form.setError("tags", {
+        type: "manual",
+        message: "Tags are required",
+      });
+    }
+  }
+
+  async function onSubmit(data: z.infer<typeof AskQuestionSchema>) {
+    startTransition(async () => {
+      const response = isEdit
+        ? await editQuestion({
+            ...data, questionId: question?._id || "" 
+          })
+        : await createQuestion({ ...data });
+
+      if (response.success) {
+        if (response.data) {
+          toast.success(
+            isEdit
+              ? "Question updated successfully"
+              : "Question created successfully",
+          );
+          router.push(`${ROUTES.QUESTION(response.data._id)}`);
+        }
+      } else {
+        toast.error(response.error?.message || "Something went wrong");
+      }
+    });
+  }
+
   return (
     <Form {...form}>
-      <form className="flex w-full flex-col gap-10">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex w-full flex-col gap-10"
+      >
         <FormField
           control={form.control}
           name="title"
@@ -72,7 +145,8 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
                 />
               </FormControl>
               <FormDescription className="body-regular text-light-500">
-                Be specific and imagine you&apos;re asking a question to another person.
+                Be specific and imagine you&apos;re asking a question to another
+                person.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -81,7 +155,7 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
         <FormField
           control={form.control}
           name="content"
-          render={({ field }) => (
+          render={({ field }: any ) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Question Description
@@ -115,6 +189,7 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
                     id="question-tags"
                     placeholder="Add tags"
                     className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 min-h-14 border"
+                    onKeyDown={(e) => handleInputKeyDown(e, field)}
                   />
                   {field.value.length > 0 && (
                     <div className="flex flex-wrap gap-2">
@@ -140,6 +215,7 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
                             compact
                             remove
                             isButton
+                            handleRemove={() => handleRemoveTag(tag, field)}
                           />
                         ))}
                       </AnimatePresence>
@@ -148,8 +224,8 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
                 </div>
               </FormControl>
               <FormDescription className="body-regular text-light-500">
-                Add up to 3 tags to describe what your question is about. You need to press enter to
-                add a tag.
+                Add up to 3 tags to describe what your question is about. You
+                need to press enter to add a tag.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -161,13 +237,13 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
             className="primary-gradient !text-light-900 w-fit"
             disabled={isPending}
           >
-            {/* {isPending
+            {isPending
               ? isEdit
                 ? "Updating question..."
                 : "Creating question..."
               : isEdit
                 ? "Update question"
-                : "Ask a question"} */}
+                : "Ask a question"}
           </Button>
         </div>
       </form>
