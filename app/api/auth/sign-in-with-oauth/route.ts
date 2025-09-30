@@ -10,7 +10,6 @@ import { SignInWithOAuthSchema } from "@/lib/validations";
 
 import Account, { IAccountDoc } from "@/database/account.model";
 import User from "@/database/user.model";
-import { APIErrorResponse, APIResponse } from "@/types/global";
 
 export async function POST(request: Request): Promise<APIResponse<IAccountDoc>> {
   const { provider, providerAccountId, user } = await request.json();
