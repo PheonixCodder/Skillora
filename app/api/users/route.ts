@@ -6,7 +6,6 @@ import dbConnect from "@/lib/mongoose";
 import { UserSchema } from "@/lib/validations";
 
 import User, { IUserDoc } from "@/database/user.model";
-import { APIErrorResponse, APIResponse } from "@/types/global";
 
 export async function GET(): Promise<APIResponse<IUserDoc[]>> {
   try {
