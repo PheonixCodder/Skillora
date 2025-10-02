@@ -53,7 +53,7 @@ function AuthSuccessToastInner() {
 
       router.replace(newUrl);
     }
-  }, [searchParams, session, status]);
+  }, [searchParams.get("register"), searchParams.get("signout"), session, status]);
 
   return null; // This component doesn't render anything visual
 }
