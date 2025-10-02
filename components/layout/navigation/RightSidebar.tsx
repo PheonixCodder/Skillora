@@ -1,95 +1,95 @@
 import Link from "next/link";
 
-// import { getHotQuestions } from "@/lib/actions/question.action";
-// import { getPopularTags } from "@/lib/actions/tag.action";
+import { getHotQuestions } from "@/lib/actions/question.action";
+import { getPopularTags } from "@/lib/actions/tag.action";
 
 import TagCard from "@/components/layout/cards/TagCard";
 
 import { ROUTES } from "@/constants/routes";
 
 async function RightSidebar() {
-  // const [hotQuestions, popularTags] = await Promise.all([
-  //   getHotQuestions(),
-  //   getPopularTags(),
-  // ]);
-  const hotQuestions = {
-    success: true,
-    data: [
-      {
-        _id: "1",
-        title: "What is the best way to learn programming?",
-        upvotes: 10,
-        downvotes: 5,
-        views: 100,
-        answers: 5,
-        tags: ["javascript", "programming"],
-        author: "John Doe",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        _id: "2",
-        title: "What is the best way to learn programming?",
-        upvotes: 10,
-        downvotes: 5,
-        views: 100,
-        answers: 5,
-        tags: ["javascript", "programming"],
-        author: "John Doe",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        _id: "3",
-        title: "What is the best way to learn programming?",
-        upvotes: 10,
-        downvotes: 5,
-        views: 100,
-        answers: 5,
-        tags: ["javascript", "programming"],
-        author: "John Doe",
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ],
-  };
-  const popularTags = { success: true, data: [
-    {
-      _id: "1",
-      name: "javascript",
-      count: 10,
-    },
-    {
-      _id: "2",
-      name: "react",
-      count: 5,
-    },
-    {
-      _id: "3",
-      name: "nextjs",
-      count: 3,
-    },
-    {
-      _id: "4",
-      name: "nodejs",
-      count: 2,
-    },
-    {
-      _id: "5",
-      name: "expressjs",
-      count: 1,
-    },
-    {
-      _id: "6",
-      name: "mongodb",
-      count: 1,
-    },
-    {
-      _id: "7",
-      name: "tailwindcss",
-      count: 1,
-    },
-  ] };
+  const [hotQuestions, popularTags] = await Promise.all([
+    getHotQuestions(),
+    getPopularTags(),
+  ]);
+  // const hotQuestions = {
+  //   success: true,
+  //   data: [
+  //     {
+  //       _id: "1",
+  //       title: "What is the best way to learn programming?",
+  //       upvotes: 10,
+  //       downvotes: 5,
+  //       views: 100,
+  //       answers: 5,
+  //       tags: ["javascript", "programming"],
+  //       author: "John Doe",
+  //       createdAt: new Date(),
+  //       updatedAt: new Date(),
+  //     },
+  //     {
+  //       _id: "2",
+  //       title: "What is the best way to learn programming?",
+  //       upvotes: 10,
+  //       downvotes: 5,
+  //       views: 100,
+  //       answers: 5,
+  //       tags: ["javascript", "programming"],
+  //       author: "John Doe",
+  //       createdAt: new Date(),
+  //       updatedAt: new Date(),
+  //     },
+  //     {
+  //       _id: "3",
+  //       title: "What is the best way to learn programming?",
+  //       upvotes: 10,
+  //       downvotes: 5,
+  //       views: 100,
+  //       answers: 5,
+  //       tags: ["javascript", "programming"],
+  //       author: "John Doe",
+  //       createdAt: new Date(),
+  //       updatedAt: new Date(),
+  //     },
+  //   ],
+  // };
+  // const popularTags = { success: true, data: [
+  //   {
+  //     _id: "1",
+  //     name: "javascript",
+  //     count: 10,
+  //   },
+  //   {
+  //     _id: "2",
+  //     name: "react",
+  //     count: 5,
+  //   },
+  //   {
+  //     _id: "3",
+  //     name: "nextjs",
+  //     count: 3,
+  //   },
+  //   {
+  //     _id: "4",
+  //     name: "nodejs",
+  //     count: 2,
+  //   },
+  //   {
+  //     _id: "5",
+  //     name: "expressjs",
+  //     count: 1,
+  //   },
+  //   {
+  //     _id: "6",
+  //     name: "mongodb",
+  //     count: 1,
+  //   },
+  //   {
+  //     _id: "7",
+  //     name: "tailwindcss",
+  //     count: 1,
+  //   },
+  // ] };
 
   const hotQuestionsSuccess = hotQuestions.success;
   const popularTagsSuccess = popularTags.success;
@@ -135,7 +135,7 @@ async function RightSidebar() {
                   key={tag._id}
                   _id={tag._id}
                   name={tag.name}
-                  questions={tag.count}
+                  questions={tag.questions}
                   showCount
                   compact
                 />
