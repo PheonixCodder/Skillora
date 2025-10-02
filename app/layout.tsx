@@ -4,7 +4,6 @@ import { generateMetadata } from "@/lib/metadata";
 import { SessionProvider } from "next-auth/react";
 import localFont from "next/font/local";
 import "./globals.css";
-// import AuthSuccessToast from "@/components/layout/AuthSuccessToast";
 import { Toaster } from "@/components/ui/sonner";
 import AuthSuccessToast from "@/components/AuthSuccessToast";
 

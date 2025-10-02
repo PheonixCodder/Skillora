@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 
-// import { signInWithCredentials } from "@/lib/actions/auth.action";
 import { SignInSchema } from "@/lib/validations";
 
 import AuthForm from "@/components/layout/forms/AuthForm";
