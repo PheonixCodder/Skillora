@@ -10,7 +10,6 @@ import { SignInSchema } from "./validations";
 
 import { IAccountDoc } from "@/database/account.model";
 import { IUserDoc } from "@/database/user.model";
-import { ActionResponse } from "@/types/global";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
