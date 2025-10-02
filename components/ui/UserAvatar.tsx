@@ -32,14 +32,16 @@ const UserAvatar = ({
     <Link href={ROUTES.PROFILE(userId)}>
       <Avatar className={cn("relative", className)}>
         {imageUrl && <AvatarImage src={imageUrl} alt={name} className="w-full object-cover" />}
-        <AvatarFallback
-          className={cn(
-            "primary-gradient font-space-grotesk font-bold tracking-wider text-white",
-            fallbackClassName
-          )}
-        >
-          {initials}
-        </AvatarFallback>
+        {!imageUrl && (
+          <AvatarFallback
+            className={cn(
+              "primary-gradient font-space-grotesk font-bold tracking-wider text-white",
+              fallbackClassName
+            )}
+          >
+            {initials}
+          </AvatarFallback>
+        )}
       </Avatar>
     </Link>
   );
