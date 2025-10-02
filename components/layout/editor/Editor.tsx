@@ -41,6 +41,8 @@ interface Props {
   fieldChange: (value: string) => void;
 }
 
+
+
 const Editor = ({ value, editorRef, fieldChange }: Props) => {
   const { resolvedTheme } = useTheme();
 
