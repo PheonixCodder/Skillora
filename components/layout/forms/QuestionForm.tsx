@@ -21,13 +21,13 @@ import { Input } from "@/components/ui/input";
 
 import TagCard from "@/components/layout/cards/TagCard";
 
+import { ROUTES } from "@/constants/routes";
+import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import { AskQuestionSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import z from "zod";
-import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import { toast } from "sonner";
-import { ROUTES } from "@/constants/routes";
+import z from "zod";
 
 const MotionTagCard = motion.create(TagCard);
 
@@ -58,7 +58,7 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
     e: React.KeyboardEvent<HTMLInputElement>,
     field: {
       value: string[];
-    },
+    }
   ) {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -103,17 +103,14 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
     startTransition(async () => {
       const response = isEdit
         ? await editQuestion({
-            ...data, questionId: question?._id || "" 
+            ...data,
+            questionId: question?._id || "",
           })
         : await createQuestion({ ...data });
 
       if (response.success) {
         if (response.data) {
-          toast.success(
-            isEdit
-              ? "Question updated successfully"
-              : "Question created successfully",
-          );
+          toast.success(isEdit ? "Question updated successfully" : "Question created successfully");
           router.push(`${ROUTES.QUESTION(response.data._id)}`);
         }
       } else {
@@ -124,10 +121,7 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full flex-col gap-10"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full flex-col gap-10">
         <FormField
           control={form.control}
           name="title"
@@ -145,8 +139,7 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
                 />
               </FormControl>
               <FormDescription className="body-regular text-light-500">
-                Be specific and imagine you&apos;re asking a question to another
-                person.
+                Be specific and imagine you&apos;re asking a question to another person.
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -155,7 +148,7 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
         <FormField
           control={form.control}
           name="content"
-          render={({ field }: any ) => (
+          render={({ field }: any) => (
             <FormItem className="flex w-full flex-col">
               <FormLabel className="paragraph-semibold text-dark400_light800">
                 Question Description
@@ -224,8 +217,8 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
                 </div>
               </FormControl>
               <FormDescription className="body-regular text-light-500">
-                Add up to 3 tags to describe what your question is about. You
-                need to press enter to add a tag.
+                Add up to 3 tags to describe what your question is about. You need to press enter to
+                add a tag.
               </FormDescription>
               <FormMessage />
             </FormItem>
