@@ -3,7 +3,6 @@ import logger from "@/lib/logger";
 
 import handleError from "./error";
 
-import { ActionResponse, ErrorResponse } from "@/types/global";
 
 interface FetchOptions extends RequestInit {
   timeout?: number;
