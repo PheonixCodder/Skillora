@@ -13,7 +13,6 @@ import { STATES } from "@/constants/states";
 import { getQuestions } from "@/lib/actions/question.action";
 import { getAllTags } from "@/lib/actions/tag.action";
 import { generateMetadata } from "@/lib/metadata";
-import dbConnect from "@/lib/mongoose";
 
 export const metadata = generateMetadata({
   title: "Home",
@@ -22,15 +21,7 @@ export const metadata = generateMetadata({
 });
 
 async function Home({ searchParams }: RouteParams) {
-  await dbConnect();
-  const tagsResponse: ActionResponse<{ _id: string; name: string }[]> = await getAllTags();
-  const actionTags =
-    tagsResponse.success && tagsResponse.data
-      ? tagsResponse.data.map((tag: { _id: string; name: string }) => ({
-          value: tag._id,
-          label: tag.name,
-        }))
-      : [];
+  
 
   const { page, pageSize, query, filter, tags } = await searchParams;
 
@@ -43,6 +34,15 @@ async function Home({ searchParams }: RouteParams) {
     tags: tagsArr,
     filter,
   });
+  
+  const tagsResponse: ActionResponse<{ _id: string; name: string }[]> = await getAllTags();
+  const actionTags =
+    tagsResponse.success && tagsResponse.data
+      ? tagsResponse.data.map((tag: { _id: string; name: string }) => ({
+          value: tag.name.toLowerCase(),
+          label: tag.name,
+        }))
+      : [];
 
   const { questions, isNext } = data || {};
 
