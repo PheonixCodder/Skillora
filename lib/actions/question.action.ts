@@ -20,8 +20,11 @@ import {
 } from "@/lib/validations";
 
 import dbConnect from "../mongoose";
-// import { createInteraction } from "./interaction.action";
+import { createInteraction } from "./interaction.action";
 import { cache } from "react";
+import { after } from "next/server";
+import { getTagsByName } from "./tag.action";
+
 
 export async function createQuestion(
   params: CreateQuestionParams
@@ -73,14 +76,14 @@ export async function createQuestion(
     );
 
     // log the interaction
-    // after(async () => {
-    //   await createInteraction({
-    //     action: "post",
-    //     actionId: question._id.toString(),
-    //     actionTarget: "question",
-    //     authorId: userId as string,
-    //   });
-    // });
+    after(async () => {
+      await createInteraction({
+        action: "post",
+        actionId: question._id.toString(),
+        actionTarget: "question",
+        authorId: userId as string,
+      });
+    });
 
     await session.commitTransaction();
 
@@ -93,7 +96,7 @@ export async function createQuestion(
   }
 }
 
-export async function editQuestion(params: EditQuestionParams): Promise<ActionResponse<IQuestion>> {
+export async function editQuestion(params: EditQuestionParams): Promise<ActionResponse<Question>> {
   const validationResult = await action({
     params,
     schema: EditQuestionSchema,
@@ -323,12 +326,14 @@ export async function getQuestions(params: PaginatedSearchParams): Promise<
       ];
     }
 
+    const {data: tagsId} = await getTagsByName(tags as Partial<Tag>[]);
+
     // 🔹 Tag filter
     if (tags && tags.length > 0) {
-      if (Array.isArray(tags)) {
-        filterQuery.tags = { $in: tags };
+      if (Array.isArray(tagsId)) {
+        filterQuery.tags = { $in: tagsId };
       } else {
-        filterQuery.tags = tags;
+        filterQuery.tags = tagsId;
       }
     }
 
@@ -477,14 +482,14 @@ export async function deleteQuestion(params: DeleteQuestionParams): Promise<Acti
     await Question.findByIdAndDelete(questionId).session(session);
 
     // log the interaction
-    // after(async () => {
-    //   await createInteraction({
-    //     action: "delete",
-    //     actionId: questionId,
-    //     actionTarget: "question",
-    //     authorId: user?.id as string,
-    //   });
-    // });
+    after(async () => {
+      await createInteraction({
+        action: "delete",
+        actionId: questionId,
+        actionTarget: "question",
+        authorId: user?.id as string,
+      });
+    });
 
     await session.commitTransaction();
     session.endSession();
