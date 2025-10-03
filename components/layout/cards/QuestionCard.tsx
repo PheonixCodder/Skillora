@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { getTimestamp } from "@/lib/utils";
 
-import Metric from "@/components/layout/Metric.tsx";
+import Metric from "@/components/layout/Metric";
 import EditDeleteAction from "@/components/layout/user/EditDeleteAction";
 
 import TagCard from "./TagCard";
