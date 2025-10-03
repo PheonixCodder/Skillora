@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import MobileNavigation from "./MobileNavigation";
 import { auth } from "@/lib/auth";
+import GlobalSearch from "../../search/GlobalSearch";
 
 const Navbar = async () => {
     const session = await auth();
@@ -16,7 +17,7 @@ const Navbar = async () => {
           Skillora
         </p>
       </Link>
-      <p>Global Search</p>
+      <GlobalSearch />
       <div className="flex-between gap-5">
         <Theme />
         {session && (

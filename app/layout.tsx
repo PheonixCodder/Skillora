@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import AuthSuccessToast from "@/components/AuthSuccessToast";
+import dbConnect from "@/lib/mongoose";
 
 const rakkas = localFont({
   src: "./fonts/RakkasVF.ttf",
@@ -32,6 +33,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  await dbConnect();
 
   return (
     <html lang="en" suppressHydrationWarning>

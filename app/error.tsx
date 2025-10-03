@@ -160,7 +160,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             {/* Skillora Branding */}
             <div className="text-dark400_light700 mt-12 flex items-center gap-2">
               <Image
-                src="/images/site-logo.svg"
+                src="/images/site-logo2.svg"
                 alt="Skillora Logo"
                 width={24}
                 height={24}
