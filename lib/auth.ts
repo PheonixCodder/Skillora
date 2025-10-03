@@ -23,21 +23,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const { email, password } = validatedFields.data;
 
           const { data: existingAccount } = (await api.accounts.getByProviderId(
-            email,
+            email
           )) as ActionResponse<IAccountDoc>;
 
           if (!existingAccount) return null;
 
           const { data: existingUser } = (await api.users.getById(
-            existingAccount.userId.toString(),
+            existingAccount.userId.toString()
           )) as ActionResponse<IUserDoc>;
 
           if (!existingUser) return null;
 
-          const isValidPassword = await bcrypt.compare(
-            password,
-            existingAccount.password!,
-          );
+          const isValidPassword = await bcrypt.compare(password, existingAccount.password!);
 
           if (isValidPassword) {
             return {
@@ -63,9 +60,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: user.email!,
         image: user.image!,
         username:
-          account.provider === "github"
-            ? (profile?.login as string)
-            : (profile?.name as string),
+          account.provider === "github" ? (profile?.login as string) : (profile?.name as string),
       };
 
       const { success } = await api.auth.signInWithOAuth({
@@ -81,12 +76,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async jwt({ token, account }) {
       if (account) {
-        const { success, data: existingAccount } =
-          await api.accounts.getByProviderId(
-            account.type === "credentials"
-              ? token.email!
-              : account.providerAccountId,
-          );
+        const { success, data: existingAccount } = await api.accounts.getByProviderId(
+          account.type === "credentials" ? token.email! : account.providerAccountId
+        );
 
         if (!success || !existingAccount) return token;
 
