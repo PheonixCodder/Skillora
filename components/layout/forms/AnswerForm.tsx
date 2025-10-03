@@ -1,19 +1,14 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
-
+import { zodResolver } from "@hookform/resolvers/zod";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
-import { toast } from "sonner";
-import z from "zod";
-
-import { createAnswer } from "@/lib/actions/answer.action";
-import { api } from "@/lib/api";
-import { AnswerSchema } from "@/lib/validations";
+import { useRef, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,28 +16,30 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { toast } from "sonner";
+import { createAnswer } from "@/lib/actions/answer.action";
+import { api } from "@/lib/api";
+import { AnswerSchema } from "@/lib/validations";
 
-import Editor from "../editor/Editor";
+const Editor = dynamic(() => import("@/components/layout/editor/Editor"), {
+  ssr: false,
+});
 
-interface AnswerFormProps {
+interface Props {
   questionId: string;
   questionTitle: string;
   questionContent: string;
 }
 
-function AnswerForm({
-  questionId,
-  questionTitle,
-  questionContent,
-}: AnswerFormProps) {
-  const [isAnswering, startTransition] = useTransition();
+const AnswerForm = ({ questionId, questionTitle, questionContent }: Props) => {
+  const [isAnswering, startAnsweringTransition] = useTransition();
   const [isAISubmitting, setIsAISubmitting] = useState(false);
-  const { data: session } = useSession();
+  const session = useSession();
 
-  // 1. Define your form.
+  const editorRef = useRef<MDXEditorMethods>(null);
+
   const form = useForm<z.infer<typeof AnswerSchema>>({
     resolver: zodResolver(AnswerSchema),
     defaultValues: {
@@ -50,76 +47,84 @@ function AnswerForm({
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof AnswerSchema>) {
-    console.log(values.content)
-    startTransition(async () => {
-      const { success, error } = await createAnswer({
+  const handleSubmit = async (values: z.infer<typeof AnswerSchema>) => {
+    startAnsweringTransition(async () => {
+      const result = await createAnswer({
         questionId,
         content: values.content,
       });
 
-      if (success) {
+      if (result.success) {
         form.reset();
-        toast.success("Answer created successfully");
+
+        toast.success("Success",{
+          description: "Your answer has been posted successfully",
+        });
+
+        if (editorRef.current) {
+          editorRef.current.setMarkdown("");
+        }
       } else {
-        toast.error(error?.message);
+        toast.error("Error",{
+          description: result.error?.message,
+        });
       }
     });
-  }
+  };
 
-  async function generateAnswer() {
-    if (!session?.user) {
-      toast.error("Please login to generate an answer");
-      return;
+  const generateAIAnswer = async () => {
+    if (session.status !== "authenticated") {
+      return toast("Please log in",{
+        description: "You need to be logged in to use this feature",
+      });
     }
 
     setIsAISubmitting(true);
 
-    try {
-      const userAnswer = form.getValues("content");
+    const userAnswer = editorRef.current?.getMarkdown() || "";
 
-      const { success, data } = await api.ai.answers(
+    try {
+      const { success, data, error } = await api.ai.answers(
         questionTitle,
         questionContent,
-        userAnswer,
+        userAnswer
       );
 
       if (!success) {
-        // 🚨 AI failed to deliver the goods! Let's let the user know with a little humor.
-        toast.error("Error generating answer", {
-          description:
-            "Looks like our AI took a coffee break. Try again in a moment!",
+        return toast.error("Error",{
+          description: error?.message,
         });
-        return;
       }
 
-      if (data?.text) {
-        const formattedAnswer = data.text
-          .toString()
-          .replace(/<br>/g, "\n") // Use newlines instead of spaces for better formatting
-          .trim();
+      if (!data) {
+        return toast.error("Error",{
+          description: "No answer generated",
+        });
+      }
 
-        console.log({ success, data });
+      const formattedAnswer = data.text.toString().replace(/<br>/g, " ").replace(/```(?![a-z]+)/g, "```txt").trim();
 
-        // ✨ Set the generated content to the form field
-        form.reset();
+      if (editorRef.current) {
+        editorRef.current.setMarkdown(formattedAnswer);
+
         form.setValue("content", formattedAnswer);
         form.trigger("content");
-
-        toast.success("AI answer generated successfully!");
-      } else {
-        toast.error("No content received from AI");
       }
+
+      toast.success("Success",{
+        description: "AI generated answer has been generated",
+      });
     } catch (error) {
-      toast.error("Something went wrong", {
+      toast.error("Error",{
         description:
-          error instanceof Error ? error.message : "Unknown error occurred",
+          error instanceof Error
+            ? error.message
+            : "There was a problem with your request",
       });
     } finally {
       setIsAISubmitting(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -128,53 +133,60 @@ function AnswerForm({
           Write your answer here
         </h4>
         <Button
-          className="btn light-border-2 text-primary-500 dark:text-primary-500 gap-1.5 rounded-md border px-4 py-2.5 shadow-none"
+          className="btn light-border-2 gap-1.5 rounded-md border px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500"
           disabled={isAISubmitting}
-          onClick={() => generateAnswer()}
+          onClick={generateAIAnswer}
         >
           {isAISubmitting ? (
             <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              <span>Generating...</span>
+              <ReloadIcon className="mr-2 size-4 animate-spin" />
+              Generating...
             </>
           ) : (
-            <Image
-              src={"/icons/stars.svg"}
-              alt="Generate AI Answer"
-              width={12}
-              height={12}
-              className="object-contain"
-            />
+            <>
+              <Image
+                src="/icons/stars.svg"
+                alt="Generate AI Answer"
+                width={12}
+                height={12}
+                className="object-contain"
+              />
+              Generate AI Answer
+            </>
           )}
         </Button>
       </div>
-
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(handleSubmit)}
           className="mt-6 flex w-full flex-col gap-10"
         >
           <FormField
             control={form.control}
             name="content"
-            render={({ field  }: any) => (
+            render={({ field }) => (
               <FormItem className="flex w-full flex-col gap-3">
-                <FormLabel>Content</FormLabel>
                 <FormControl className="mt-3.5">
-                  <Editor value={field.value} fieldChange={field.onChange} {...field} />
+                  <Editor
+                    value={field.value}
+                    editorRef={editorRef}
+                    fieldChange={field.onChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <div className="flex justify-end">
             <Button type="submit" className="primary-gradient w-fit">
               {isAnswering ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <ReloadIcon className="mr-2 size-4 animate-spin" />
+                  Posting...
                 </>
               ) : (
-                "Submit"
+                "Post Answer"
               )}
             </Button>
           </div>
@@ -182,6 +194,6 @@ function AnswerForm({
       </Form>
     </div>
   );
-}
+};
 
 export default AnswerForm;

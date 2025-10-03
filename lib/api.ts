@@ -50,20 +50,22 @@ export const api = {
         body: JSON.stringify({ providerAccountId }),
       }),
   },
-    ai: {
-      answers: async (question: string, content: string, userAnswer: string) =>
-        fetchHandler<
-          APIResponse<{
-            text: string;
-            usage: LanguageModelUsage;
-            reasoning: string | undefined;
-            providerMetadata: unknown;
-            sources: unknown;
-          }>
-        >(`${API_BASE_URL}/ai/answers`, {
-          method: "POST",
-          body: JSON.stringify({ question, content, userAnswer }),
-          timeout: 100000,
-        }),
-    },
+      ai: {
+    answers: async (question: string, content: string, userAnswer: string) =>
+      fetchHandler<
+        APIResponse<{
+          text: string;
+          tokens: {
+            promptTokens: number;
+            completionTokens: number;
+            totalTokens: number;
+          };
+        }>
+      >(`${API_BASE_URL}/ai/answers`, {
+        method: "POST",
+        body: JSON.stringify({ question, content, userAnswer }),
+        timeout: 100000,
+      }),
+  },
+
 };

@@ -1,32 +1,32 @@
 "use client";
 
 import {
+  MDXEditor,
+  UndoRedo,
   BoldItalicUnderlineToggles,
-  ChangeCodeMirrorLanguage,
+  toolbarPlugin,
   CodeToggle,
-  ConditionalContents,
-  CreateLink,
   InsertCodeBlock,
+  codeBlockPlugin,
+  headingsPlugin,
+  listsPlugin,
+  linkPlugin,
+  quotePlugin,
+  markdownShortcutPlugin,
+  ListsToggle,
+  linkDialogPlugin,
+  CreateLink,
   InsertImage,
   InsertTable,
-  InsertThematicBreak,
-  ListsToggle,
-  MDXEditor,
-  MDXEditorMethods,
-  Separator,
-  UndoRedo,
-  codeBlockPlugin,
-  codeMirrorPlugin,
-  diffSourcePlugin,
-  headingsPlugin,
-  imagePlugin,
-  linkDialogPlugin,
-  linkPlugin,
-  listsPlugin,
-  markdownShortcutPlugin,
-  quotePlugin,
   tablePlugin,
-  toolbarPlugin,
+  imagePlugin,
+  codeMirrorPlugin,
+  ConditionalContents,
+  ChangeCodeMirrorLanguage,
+  Separator,
+  InsertThematicBreak,
+  diffSourcePlugin,
+  MDXEditorMethods,
 } from "@mdxeditor/editor";
 import { basicDark } from "cm6-theme-basic-dark";
 import { useTheme } from "next-themes";
@@ -37,11 +37,9 @@ import "./dark-editor.css";
 
 interface Props {
   value: string;
-  editorRef?: Ref<MDXEditorMethods> | null;
+  editorRef: Ref<MDXEditorMethods> | null;
   fieldChange: (value: string) => void;
 }
-
-
 
 const Editor = ({ value, editorRef, fieldChange }: Props) => {
   const { resolvedTheme } = useTheme();
@@ -64,7 +62,7 @@ const Editor = ({ value, editorRef, fieldChange }: Props) => {
         markdownShortcutPlugin(),
         tablePlugin(),
         imagePlugin(),
-        codeBlockPlugin({ defaultCodeBlockLanguage: "" }),
+        codeBlockPlugin({ defaultCodeBlockLanguage: "txt" }),
         codeMirrorPlugin({
           codeBlockLanguages: {
             css: "css",
@@ -77,7 +75,6 @@ const Editor = ({ value, editorRef, fieldChange }: Props) => {
             json: "json",
             js: "javascript",
             ts: "typescript",
-            "": "unspecified",
             tsx: "TypeScript (React)",
             jsx: "JavaScript (React)",
           },
