@@ -119,9 +119,8 @@ interface Job {
   job_title?: string;
   job_description?: string;
   job_apply_link?: string;
-  job_city?: string;
-  job_state?: string;
-  job_country?: string;
+  location?: string;
+  remote?: boolean;
 }
 
 interface Country {
