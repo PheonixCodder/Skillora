@@ -90,7 +90,7 @@ const TagCard = ({
         </p>
 
         <p className="small-medium text-dark400_light500 mt-3.5">
-          <span className="body-semibold primary-text-gradient mr-2.5">{questions}+</span>
+          <span className="body-semibold primary-text-gradient mr-2.5">{ questions! > 0 ? questions + "+" : questions}</span>
           Questions
         </p>
       </article>
