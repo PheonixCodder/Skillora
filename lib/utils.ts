@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { UAParser } from "ua-parser-js";
 import { twMerge } from "tailwind-merge";
 
 import { techMap } from "@/constants/DevIconTechMap";
@@ -119,4 +120,69 @@ export function assignBadges(params: {
   });
 
   return badgeCounts;
+}
+
+export function processJobTitle(title: string | undefined | null): string {
+  // Check if title is undefined or null
+  if (title === undefined || title === null) {
+    return "No Job Title";
+  }
+
+  // Split the title into words
+  const words = title.split(" ");
+
+  // Filter out undefined or null and other unwanted words
+  const validWords = words.filter((word) => {
+    return (
+      word !== undefined &&
+      word !== null &&
+      word.toLowerCase() !== "undefined" &&
+      word.toLowerCase() !== "null"
+    );
+  });
+
+  // If no valid words are left, return the general title
+  if (validWords.length === 0) {
+    return "No Job Title";
+  }
+
+  // Join the valid words to create the processed title
+  const processedTitle = validWords.join(" ");
+
+  return processedTitle;
+}
+
+export function parseDevice(userAgent: string): string {
+  const { browser, os, device } = UAParser(userAgent);
+
+  let deviceName = "";
+
+  if (device && device.model) {
+    // e.g. iPhone, Samsung Galaxy, Pixel
+    deviceName = `${device.vendor || ""} ${device.model}`.trim();
+  } else {
+    // Desktop or unknown device → show browser + OS
+    const browserName = browser.name || "Unknown Browser";
+    const osName = os.name || "Unknown OS";
+    deviceName = `${browserName} on ${osName}`;
+  }
+
+  return deviceName;
+}
+
+
+export async function lookupGeo(ip: string): Promise<string> {
+  try {
+    // Using ipapi.co (free tier, 30k requests/month)
+    const res = await fetch(`https://ipapi.co/${ip}/json/`);
+    if (!res.ok) return "Unknown Location";
+
+    const data = await res.json();
+    const city = data.city || "";
+    const country = data.country_name || "";
+    return `${city ? city + ", " : ""}${country || "Unknown"}`;
+  } catch (err) {
+    console.error("GeoIP lookup failed:", err);
+    return "Unknown Location";
+  }
 }
