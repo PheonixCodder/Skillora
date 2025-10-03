@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useRef, useTransition } from "react";
 
 import { useRouter } from "next/navigation";
 
@@ -27,6 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
+import { MDXEditorMethods } from "@mdxeditor/editor";
 
 const MotionTagCard = motion.create(TagCard);
 
@@ -43,6 +44,8 @@ type QuestionFormProps =
 const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+    const editorRef = useRef<MDXEditorMethods>(null);
+
 
   const form = useForm<z.infer<typeof AskQuestionSchema>>({
     resolver: zodResolver(AskQuestionSchema),
@@ -159,7 +162,7 @@ const Editor = dynamic(() => import("@/components/layout/editor/Editor"), {
                 <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl>
-                <Editor value={field.value} fieldChange={field.onChange} />
+                <Editor editorRef={editorRef} value={field.value} fieldChange={field.onChange} />
               </FormControl>
               <FormDescription className="body-regular text-light-500">
                 Write a detailed description of your question.
