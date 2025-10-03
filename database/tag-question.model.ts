@@ -1,4 +1,4 @@
-import { model, models, Schema, Types, Document } from "mongoose";
+import { Document, model, models, Schema, Types } from "mongoose";
 
 export interface ITagQuestion {
   tag: Types.ObjectId;
@@ -14,7 +14,6 @@ const TagQuestionSchema = new Schema<ITagQuestion>(
   { timestamps: true }
 );
 
-const TagQuestion =
-  models?.TagQuestion || model<ITagQuestion>("TagQuestion", TagQuestionSchema);
+const TagQuestion = models?.TagQuestion || model<ITagQuestion>("TagQuestion", TagQuestionSchema);
 
 export default TagQuestion;
