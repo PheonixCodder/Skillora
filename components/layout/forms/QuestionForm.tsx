@@ -5,9 +5,8 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 
 import { AnimatePresence, motion } from "framer-motion";
-
-import Editor from "@/components/layout/editor/Editor";
 import { Button } from "@/components/ui/button";
+import dynamic from "next/dynamic";
 import {
   Form,
   FormControl,
@@ -118,6 +117,11 @@ const QuestionForm = ({ isEdit = false, question }: QuestionFormProps) => {
       }
     });
   }
+
+// 👇 hydration-safe import
+const Editor = dynamic(() => import("@/components/layout/editor/Editor"), {
+  ssr: false,
+});
 
   return (
     <Form {...form}>
