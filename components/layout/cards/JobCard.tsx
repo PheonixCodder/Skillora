@@ -10,25 +10,13 @@ interface JobLocationProps {
   job_state?: string;
 }
 
-const JobLocation = ({
-  job_country,
-  job_city,
-  job_state,
-}: JobLocationProps) => {
-  return (
-    <div className="background-light800_dark400 flex items-center justify-end gap-2 rounded-2xl px-3 py-1.5">
-      <Image
-        src={`https://flagsapi.com/${job_country}/flat/64.png`}
-        alt="country symbol"
-        width={16}
-        height={16}
-        className="rounded-full"
-      />
+const JobLocation = ({ location, remote }: { location?: string | null; remote?: boolean }) => {
+  if (!location && !remote) return null;
 
+  return (
+    <div className="background-light800_dark400 flex items-center gap-2 rounded-2xl px-3 py-1.5">
       <p className="body-medium text-dark400_light700">
-        {job_city && `${job_city}, `}
-        {job_state && `${job_state}, `}
-        {job_country && `${job_country}`}
+        {remote ? "Remote" : location}
       </p>
     </div>
   );
@@ -42,19 +30,14 @@ const JobCard = ({ job }: { job: Job }) => {
     job_title,
     job_description,
     job_apply_link,
-    job_city,
-    job_state,
-    job_country,
+    location,
+    remote,
   } = job;
 
   return (
     <section className="background-light900_dark200 light-border shadow-light100_darknone flex flex-col items-start gap-6 rounded-lg border p-6 sm:flex-row sm:p-8">
       <div className="flex w-full justify-end sm:hidden">
-        <JobLocation
-          job_country={job_country}
-          job_city={job_city}
-          job_state={job_state}
-        />
+        <JobLocation location={job.location} remote={job.remote} />
       </div>
 
       <div className="flex items-center gap-6">
@@ -88,11 +71,8 @@ const JobCard = ({ job }: { job: Job }) => {
           </p>
 
           <div className="hidden sm:flex">
-            <JobLocation
-              job_country={job_country}
-              job_city={job_city}
-              job_state={job_state}
-            />
+                    <JobLocation location={location} remote={remote} />
+
           </div>
         </div>
 
