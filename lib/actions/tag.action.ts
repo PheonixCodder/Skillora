@@ -11,6 +11,7 @@ import { action } from "../handlers/action";
 import handleError from "../handlers/error";
 
 import { Question, Tag } from "@/database";
+import dbConnect from "../mongoose";
 
 export const getTags = async (
   params: PaginatedSearchParamsType
@@ -153,6 +154,7 @@ export const getPopularTags = async (): Promise<
   ActionResponse<Pick<Tag, "_id" | "name" | "questions">[]>
 > => {
   try {
+    await dbConnect();
     const tags = await Tag.find({}).sort({ questions: -1 }).select("_id name questions").limit(5);
 
     return {
@@ -167,6 +169,19 @@ export const getPopularTags = async (): Promise<
 export const getAllTags = async () => {
   try {
     const tags = await Tag.find({}).select("_id name");
+
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(tags)),
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+};
+
+export const getTagsByName = async (names: Partial<Tag>[]) => {
+  try {
+    const tags = await Tag.find({ name: { $in: names } }).select("_id name");
 
     return {
       success: true,
