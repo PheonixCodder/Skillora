@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
       },
+      {
+        protocol: "https",
+        hostname: "findwork-dev-images.s3.amazonaws.com", // for company logos
+      },
     ],
   },
 };
