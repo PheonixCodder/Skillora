@@ -14,7 +14,6 @@ import {
   SignUpSchema,
   SignUpWithCredentialsParamsType,
 } from "@/lib/validations";
-import { ActionResponse, ErrorResponse } from "@/types/global";
 
 export async function signUpWithCredentials(
   params: SignUpWithCredentialsParamsType
