@@ -16,22 +16,58 @@ export const fetchCountries = async () => {
   }
 };
 
+interface JobFilterParams {
+  query?: string;
+  location?: string;
+  jobType?: string;      // e.g. “Full-time”, “Part-time”, “Remote”
+  page?: number;
+  pageSize?: number;
+}
+
 export const fetchJobs = async (filters: JobFilterParams) => {
-  const { query, page } = filters;
+  const { query, location } = filters;
 
-  const headers = {
-    "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPID_API_KEY ?? "",
-    "X-RapidAPI-Host": "jsearch.p.rapidapi.com",
-  };
+  // Base URL
+  const baseUrl = "https://findwork.dev/api/jobs";
 
-  const response = await fetch(
-    `https://jsearch.p.rapidapi.com/search?query=${query}&page=${page}`,
-    {
-      headers,
-    }
-  );
+  // Build URL with query params
+  const url = new URL(baseUrl);
 
-  const result = await response.json();
+  if (query !== "") url.searchParams.append("search", query ?? "");
 
-  return result.data;
+  if (location !== "") url.searchParams.append("location", location ?? "");
+
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      "Authorization": `Token ${process.env.FINDWORK_API_KEY ?? ""}`,
+      "Content-Type": "application/json",
+    },
+  });
+  
+  if (!response.ok) {
+    throw new Error("Failed to fetch jobs from Findwork");
+  }
+
+  const data = await response.json();
+
+  // The API might already return the filtered & paginated data
+  // Return it directly if so
+    return data.results.map((job: any) => ({
+    id: job.id,
+    employer_logo: job.logo,
+    employer_website: job.company_url ?? job.url,
+    job_employment_type: job.employment_type,
+    job_title: job.role,
+    job_description: job.text.replace(/<[^>]+>/g, ""), // strip HTML
+    job_apply_link: job.url,
+    job_city: null,
+    job_state: null,
+    job_country: null,
+    remote: job.remote,
+    company_name: job.company_name,
+    date_posted: job.date_posted,
+    keywords: job.keywords,
+  }));
+
 };
