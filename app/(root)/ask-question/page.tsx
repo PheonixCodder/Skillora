@@ -3,6 +3,13 @@ import React from "react";
 
 import { auth } from "@/lib/auth";
 import QuestionForm from "@/components/layout/forms/QuestionForm";
+import { generateMetadata } from "@/lib/metadata";
+
+export const metadata = generateMetadata({
+  title: "Ask a question",
+  description:
+    "Discover different programming questions and answers with recommendations from the community.",
+})
 
 const AskQuestion = async () => {
   const session = await auth();

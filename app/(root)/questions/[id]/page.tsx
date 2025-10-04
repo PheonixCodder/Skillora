@@ -19,6 +19,7 @@ import { hasVoted } from "@/lib/actions/vote.action";
 import { formatNumber, getTimestamp } from "@/lib/utils";
 import { Metadata } from "next";
 import { Loader2 } from "lucide-react";
+import { auth } from "@/lib/auth";
 
 export async function generateMetadata({ params }: RouteParams): Promise<Metadata> {
   const { id } = await params;
@@ -47,6 +48,7 @@ const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;
   const { page, pageSize, filter } = await searchParams;
   const { success, data: question } = await getQuestion({ questionId: id });
+  const session = await auth();
 
   after(async () => {
     await incrementViews({ questionId: id });
@@ -169,11 +171,13 @@ const QuestionDetails = async ({ params, searchParams }: RouteParams) => {
       </section>
 
       <section className="my-5">
+        {session &&
         <AnswerForm
           questionId={question._id}
           questionTitle={question.title}
           questionContent={question.content}
         />
+         }
       </section>
     </>
   );

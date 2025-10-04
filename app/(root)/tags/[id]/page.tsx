@@ -5,11 +5,38 @@ import DataRenderer from "@/components/ui/DataRenderer";
 import { ROUTES } from "@/constants/routes";
 import { STATES } from "@/constants/states";
 import { getTagQuestions } from "@/lib/actions/tag.action";
+import { Metadata } from "next";
 
+// ✅ Step 1: Use generateMetadata that calls getTagQuestions (or a light version)
+export async function generateMetadata({ params }: RouteParams): Promise<Metadata> {
+  const { id } = await params;
+
+  // Lightweight fetch only to get the tag name
+  const { success, data } = await getTagQuestions({
+    tagId: id,
+    page: 1,
+    pageSize: 1,
+  });
+
+  const tagName = success ? data?.tag?.name : "Tag";
+
+  return {
+    title: tagName,
+    description: `Explore questions tagged with ${tagName}.`,
+    twitter: {
+      card: "summary_large_image",
+      title: tagName,
+      description: `Explore questions tagged with ${tagName}.`,
+    },
+  };
+}
+
+// ✅ Step 2: Main page using the same cached call
 const Page = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;
   const { page, pageSize, query } = await searchParams;
 
+  // Same call used above — will be cached by Next.js automatically
   const { success, data, error } = await getTagQuestions({
     tagId: id,
     page: Number(page) || 1,

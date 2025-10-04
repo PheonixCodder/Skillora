@@ -7,6 +7,14 @@ import { TagFilters } from "@/constants/filters";
 import { ROUTES } from "@/constants/routes";
 import { STATES} from "@/constants/states";
 import { getTags } from "@/lib/actions/tag.action";
+import { Metadata } from "next";
+import { generateMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = generateMetadata({
+  title: "Tags",
+  description:
+    "Discover different programming questions and answers with recommendations from the community.",
+})
 
 const Tags = async ({ searchParams }: RouteParams) => {
   const { page, pageSize, query, filter } = await searchParams;

@@ -7,6 +7,7 @@ import { SignUpSchema } from "@/lib/validations";
 import AuthForm from "@/components/layout/forms/AuthForm";
 import { signUpWithCredentials } from "@/lib/actions/auth.action";
 
+
 function SignUp() {
   return (
     <>

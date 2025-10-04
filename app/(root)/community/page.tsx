@@ -7,9 +7,16 @@ import { UserFilters } from "@/constants/filters";
 import { ROUTES } from "@/constants/routes";
 import { STATES } from "@/constants/states";
 import { getUsers } from "@/lib/actions/user.action";
+import { Metadata } from "next";
+import { generateMetadata } from "@/lib/metadata";
+
+export const metadata = generateMetadata({
+  title: "Community",
+  description:
+    "Discover different programming questions and answers with recommendations from the community.",
+})
 
 const Community = async ({ searchParams }: RouteParams) => {
-  console.log(navigator?.userAgent)
   const { page, pageSize, query, filter } = await searchParams;
 
   const { success, data, error } = await getUsers({

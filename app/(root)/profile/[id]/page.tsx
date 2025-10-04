@@ -21,6 +21,8 @@ import {
   getUserStats,
   getUserTopTags,
 } from "@/lib/actions/user.action";
+import { Metadata } from "next";
+import { generateMetadata } from "@/lib/metadata";
 
 const ProfilePage = async ({ params, searchParams }: RouteParams) => {
   const { id } = await params;

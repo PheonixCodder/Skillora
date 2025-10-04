@@ -7,6 +7,15 @@ import { CollectionFilters } from "@/constants/filters";
 import { ROUTES } from "@/constants/routes";
 import { STATES } from "@/constants/states";
 import { getSavedQuestions } from "@/lib/actions/collection.action";
+import { Metadata } from "next";
+import { generateMetadata } from "@/lib/metadata";
+
+
+export const metadata: Metadata = generateMetadata({
+  title: "Saved Questions",
+  description:
+    "Discover different programming questions and answers with recommendations from the community.",
+})
 
 interface SearchParams {
   searchParams: Promise<{ [key: string]: string }>;
