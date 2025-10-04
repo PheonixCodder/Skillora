@@ -15,8 +15,8 @@ const client = new OpenAI({
 
 },);
 
-// 🎯 Use Grok 4 Fast Free from OpenRouter
-const MODEL = "x-ai/grok-4-fast:free";
+// 🎯 Use Fast Free from OpenRouter
+const MODEL = "openai/gpt-oss-20b:free";
 
 export async function POST(req: Request) {
   const session = await auth();
