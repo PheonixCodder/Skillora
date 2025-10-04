@@ -8,6 +8,7 @@ interface GenerateMetadataProps {
 	siteName?: string;
 }
 
+
 export function generateMetadata({
 	title = "Skillora",
 	description = "A boilerplate for Next.js applications",
