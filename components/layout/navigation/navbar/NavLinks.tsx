@@ -26,7 +26,7 @@ function NavLinks({ isMobileNav = false, userId }: { isMobileNav?: boolean; user
 
         const LinkComponent = (
           <Link
-            className={cn("group relative", link.LABEL === "Profile" && !userId && "hidden")}
+            className={cn("group relative", (link.LABEL === "Profile" || link.LABEL === "Collections") && !userId && "hidden")}
             key={link.PATH}
             href={href}
           >
@@ -52,7 +52,7 @@ function NavLinks({ isMobileNav = false, userId }: { isMobileNav?: boolean; user
                 )}
               >
                 {link.LABEL}
-              </p>{" "}
+              </p>
             </div>
 
             {isActive && (
