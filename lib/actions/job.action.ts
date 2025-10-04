@@ -16,44 +16,38 @@ export const fetchCountries = async () => {
   }
 };
 
+// lib/actions/job.action.ts
 interface JobFilterParams {
   query?: string;
   location?: string;
-  jobType?: string;      // e.g. “Full-time”, “Part-time”, “Remote”
+  jobType?: string;
   page?: number;
   pageSize?: number;
 }
 
 export const fetchJobs = async (filters: JobFilterParams) => {
-  const { query, location } = filters;
+  const { query, location, page = 1, pageSize = 10 } = filters;
 
-  // Base URL
   const baseUrl = "https://findwork.dev/api/jobs";
-
-  // Build URL with query params
   const url = new URL(baseUrl);
 
-  if (query !== "") url.searchParams.append("search", query ?? "");
-
-  if (location !== "") url.searchParams.append("location", location ?? "");
-
+  if (query) url.searchParams.append("search", query);
+  if (location) url.searchParams.append("location", location);
 
   const response = await fetch(url.toString(), {
     headers: {
-      "Authorization": `Token ${process.env.FINDWORK_API_KEY ?? ""}`,
+      Authorization: `Token ${process.env.FINDWORK_API_KEY ?? ""}`,
       "Content-Type": "application/json",
     },
+    next: { revalidate: 3600 }, // cache for 1h
   });
-  
-  if (!response.ok) {
-    throw new Error("Failed to fetch jobs from Findwork");
-  }
+
+  if (!response.ok) throw new Error("Failed to fetch jobs from Findwork API");
 
   const data = await response.json();
 
-  // The API might already return the filtered & paginated data
-  // Return it directly if so
-    return data.results.map((job: any) => ({
+  // Transform results
+  const allJobs = data.results.map((job: any) => ({
     id: job.id,
     employer_logo: job.logo,
     employer_website: job.company_url ?? job.url,
@@ -61,13 +55,18 @@ export const fetchJobs = async (filters: JobFilterParams) => {
     job_title: job.role,
     job_description: job.text.replace(/<[^>]+>/g, ""), // strip HTML
     job_apply_link: job.url,
-    job_city: null,
-    job_state: null,
-    job_country: null,
     remote: job.remote,
     company_name: job.company_name,
     date_posted: job.date_posted,
     keywords: job.keywords,
   }));
 
+  // Manual pagination logic
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedJobs = allJobs.slice(startIndex, endIndex);
+
+  const isNext = endIndex < allJobs.length;
+
+  return { jobs: paginatedJobs, isNext };
 };
