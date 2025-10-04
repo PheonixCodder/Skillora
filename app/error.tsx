@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AlertTriangle, Home, RefreshCcw, Bug, ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface GlobalErrorProps {
   error: Error & { digest?: string };
@@ -13,6 +14,7 @@ interface GlobalErrorProps {
 }
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
+  const router = useRouter()
   // Log error for debugging and monitoring
   React.useEffect(() => {
     console.error("Global Error:", {
@@ -115,15 +117,14 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
                   Try Again
                 </Button>
 
-                <Link href="/">
                   <Button
+                  onClick={()=> router.push("/")}
                     variant="outline"
                     className="paragraph-medium text-dark100_light900 bg-light-900 dark:bg-dark-300 border-light-700 dark:border-dark-400 hover:bg-light-800 dark:hover:bg-dark-200 min-w-[140px] rounded-lg px-6 py-3"
                   >
                     <Home className="size-4" />
                     Go Home
                   </Button>
-                </Link>
               </div>
 
               {/* Additional Help Options */}
